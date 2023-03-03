@@ -14,7 +14,21 @@
  * limitations under the License.
  */
 
-package models
+package forms
 
-sealed abstract class Done
-case object Done extends Done
+import forms.mappings.Mappings
+import play.api.data.Form
+import uk.gov.hmrc.domain.Nino
+
+import javax.inject.Inject
+import scala.util.Try
+
+class NinoFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[Nino] =
+    Form(
+      "value" -> text("nino.error.required")
+        .verifying("nino.error.invalid", s => Try(Nino(s.replaceAll("\\s", "").toUpperCase)).isSuccess)
+        .transform[Nino](s => Nino(s.replaceAll("\\s", "").toUpperCase), nino => nino.toString)
+    )
+}

@@ -14,6 +14,9 @@ GET         /there-is-a-problem                          controllers.JourneyReco
 
 GET         /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
 
+GET         /allow-list/add                              controllers.AddAllowlistController.onPageLoad()
+POST        /allow-list/add                              controllers.AddAllowlistController.onSubmit()
+
 GET         /account/sign-out-survey                     controllers.auth.AuthController.signOut
 GET         /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
