@@ -9,6 +9,8 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "play-conditional-form-mapping"  % "1.11.0-play-28",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28"     % "6.4.0",
     "uk.gov.hmrc"       %% "play-language"                  % "5.3.0-play-28",
+    "uk.gov.hmrc"       %% "internal-auth-client-play-28"   % "1.2.0",
+    "uk.gov.hmrc"       %% "domain"                         % "8.1.0-play-28",
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"             % "0.68.0"
   )
 
@@ -23,7 +25,8 @@ object AppDependencies {
     "org.mockito"             %% "mockito-scala"           % "1.16.42",
     "org.scalacheck"          %% "scalacheck"              % "1.15.4",
     "uk.gov.hmrc.mongo"       %% "hmrc-mongo-test-play-28" % "0.68.0",
-    "com.vladsch.flexmark"    %  "flexmark-all"            % "0.62.2"
+    "com.vladsch.flexmark"    %  "flexmark-all"            % "0.62.2",
+    "com.github.tomakehurst"  %  "wiremock-standalone"     % "2.27.2"
   ).map(_ % "test, it")
 
   def apply(): Seq[ModuleID] = compile ++ test

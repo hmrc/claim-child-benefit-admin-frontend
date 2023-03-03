@@ -55,3 +55,5 @@ signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+allow-list.add.heading = Add NINO to allow list
