@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.Text
+package config
 
-@this(layout: Layout)
+import play.api.i18n.MessagesApi
+import play.api.mvc.Request
+import play.twirl.api.Html
+import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
+import views.html.ErrorTemplate
 
-@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
-@layout(pageTitle = Some(pageTitle)) {
-    <h1 class="govuk-heading-xl">@{Text(heading).asHtml}</h1>
-    <p class="govuk-body">@{Text(message).asHtml}</p>
-}
+import javax.inject.{Inject, Singleton}
 
-@{
-    //$COVERAGE-OFF$
+@Singleton
+class ErrorHandler @Inject()(errorTemplate: ErrorTemplate, val messagesApi: MessagesApi)
+    extends FrontendErrorHandler {
+
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]): Html =
+    errorTemplate(pageTitle, heading, message)
 }
