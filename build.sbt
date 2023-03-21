@@ -1,6 +1,6 @@
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
 
-lazy val microservice = Project("user-allow-list-admin-frontend", file("."))
+lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .settings(
     majorVersion := 0,
