@@ -10,3 +10,4 @@ POST       /throttle                          controllers.ThrottleController.onS
 
 GET        /supplementary-data/summaries      controllers.SupplementaryDataDailySummaryController.onPageLoad()
 GET        /supplementary-data/submissions    controllers.SupplementaryDataSubmissionsController.onPageLoad(status: Option[SubmissionItemStatus] ?= None, created: Option[LocalDate] ?= None, offset: Option[Int] ?= None)
+GET        /supplementary-data/:id            controllers.SupplementaryDataSubmissionController.onPageLoad(id: String)
