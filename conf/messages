@@ -20,3 +20,14 @@ throttle.limit.set = Limit set to {0}
 
 dailySummaries.title = Daily submissions
 dailySummaries.heading = Daily submissions
+
+submissions.title = Supplementary data submissions
+submissions.heading = Supplementary data submissions
+submissions.none = There are no supplementary data submissions
+submissions.filters = Filtered by
+submissions.filter.status = Status of {0}
+submissions.filter.created = Created on {0}
+submissions.id = Id
+submissions.status = Status
+submissions.lastUpdated = Last updated
+submissions.failureReason = Failure reason

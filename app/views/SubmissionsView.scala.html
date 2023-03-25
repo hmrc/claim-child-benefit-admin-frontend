@@ -1,0 +1,165 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import java.time.LocalDate
+@import java.time.LocalDateTime
+@import java.time.ZoneOffset
+
+@import views.ServiceBreadcrumbs
+
+@this(
+        layout: Layout,
+        govukBreadcrumbs: GovukBreadcrumbs
+)
+
+@(
+        submissions: Seq[SubmissionSummary],
+        status: Option[SubmissionItemStatus],
+        created: Option[LocalDate],
+        limit: Int,
+        offset: Int,
+        totalCount: Int
+)(implicit request: Request[_], messages: Messages)
+
+  @currentPage = @{offset / limit + 1}
+  @lastPage = @{totalCount / limit}
+
+  @breadcrumbs = {
+    @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
+  }
+
+  @pageLayout(contentBlock: Html) = {
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+      @contentBlock
+      </div>
+    </div>
+  }
+
+  @layout(
+    pageTitle = Some(titleNoForm(messages("submissions.title"))),
+    pageLayout = pageLayout,
+    beforeContent = Some(breadcrumbs)
+  ) {
+
+    <h1 class="govuk-heading-l">@messages("submissions.heading")</h1>
+
+    @if(List(status, created).flatten.nonEmpty) {
+      <h2 class="govuk-heading-s">
+      @messages("submissions.filters")
+      </h2>
+      <ul class="govuk-list govuk-list--bullet">
+        @status.map { status =>
+          <li>@messages("submissions.filter.status", status)</li>
+        }
+        @created.map { created =>
+          <li>@messages("submissions.filter.created", date(created))</li>
+        }
+      </ul>
+    }
+
+    @if(submissions.nonEmpty) {
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col">@messages("submissions.id")</th>
+            @if(created.isEmpty) {
+              <th class="govuk-table__header" scope="col">@messages("submissions.status")</th>
+            }
+            @if(submissions.exists(_.failureReason.isDefined)) {
+              <th class="govuk-table__header" scope="col">@messages("submissions.failureReason")</th>
+            }
+            <th class="govuk-table__header" scope="col">@messages("submissions.lastUpdated")</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          @submissions.sortBy(_.lastUpdated).reverse.map { submission =>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">
+                <a href="#" class="govuk-link govuk-!-font-size-16">
+                  @submission.id
+                </a>
+              </th>
+              @if(created.isEmpty) {
+                <th class="govuk-table__header" scope="row">@submission.status</th>
+              }
+              @if(submissions.exists(_.failureReason.isDefined)) {
+                <td class="govuk-table__cell">@submission.failureReason</td>
+              }
+              <td class="govuk-table__cell">@submission.lastUpdated</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <nav class="govuk-pagination" role="navigation" aria-label="results">
+
+        @if(offset > 0) {
+          <div class="govuk-pagination__prev">
+            <a class="govuk-link govuk-pagination__link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(status, created, Some(offset - limit))" rel="prev">
+              <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+              </svg>
+              <span class="govuk-pagination__link-title">@messages("pagination.previous")</span></a>
+          </div>
+        }
+        <ul class="govuk-pagination__list">
+
+          @if(currentPage > 2) {
+            <li class="govuk-pagination__item">
+              <a class="govuk-link govuk-pagination__link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(status, created, None)" aria-label="Page 1">
+                1
+              </a>
+            </li>
+          }
+          @if(currentPage > 3) {
+            <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+          }
+
+          @for(i <- (currentPage - 1).max(1) to (currentPage + 1).min(totalCount / limit)) {
+            <li class="govuk-pagination__item @if(i == currentPage) {govuk-pagination__item--current}">
+              <a class="govuk-link govuk-pagination__link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(status, created, Some((i - 1) * limit))" aria-label="Page @i" aria-current="page">
+                @i
+              </a>
+            </li>
+          }
+
+          @if(currentPage < lastPage - 2) {
+            <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+          }
+
+          @if(currentPage < lastPage - 1) {
+            <li class="govuk-pagination__item">
+              <a class="govuk-link govuk-pagination__link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(status, created, Some(totalCount - limit))" aria-label="Page @{totalCount / limit}">
+              @{totalCount / limit}
+              </a>
+            </li>
+          }
+
+        </ul>
+
+        @if(offset < totalCount - limit) {
+          <div class="govuk-pagination__next">
+            <a class="govuk-link govuk-pagination__link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(status, created, Some(offset + limit))" rel="next"> <span class="govuk-pagination__link-title">@messages("pagination.next")</span> <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+              <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+            </svg></a>
+          </div>
+        }
+      </nav>
+    } else {
+      <p class="govuk-body">@messages("submissions.none")</p>
+    }
+  }

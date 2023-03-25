@@ -1,4 +1,5 @@
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
+import play.sbt.routes.RoutesKeys
 
 lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
@@ -6,6 +7,11 @@ lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
     majorVersion := 0,
     scalaVersion := "2.13.8",
     PlayKeys.playDefaultPort := 11308,
+    RoutesKeys.routesImport ++= Seq(
+      "java.time.LocalDate",
+      "models._",
+      "uk.gov.hmrc.play.bootstrap.binders.RedirectUrl"
+    ),
     TwirlKeys.templateImports ++= Seq(
         "play.twirl.api.HtmlFormat",
         "play.twirl.api.HtmlFormat._",
