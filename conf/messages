@@ -1,2 +1,14 @@
 service.name = claim-child-benefit-admin-frontend
 service.text = This is your new service
+
+site.submit = Submit
+site.success = Success
+
+breadcrumbs.index = Home
+
+throttle.title = Throttle settings
+throttle.heading = Throttle settings
+throttle.data.count = Count
+throttle.data.limit = Limit
+throttle.limit.label = Set a new limit
+throttle.limit.set = Limit set to {0}
