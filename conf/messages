@@ -6,9 +6,17 @@ site.success = Success
 
 breadcrumbs.index = Home
 
+status.submitted = Submitted
+status.forwarded = Forwarded
+status.completed = Completed
+status.failed = Failed
+
 throttle.title = Throttle settings
 throttle.heading = Throttle settings
 throttle.data.count = Count
 throttle.data.limit = Limit
 throttle.limit.label = Set a new limit
 throttle.limit.set = Limit set to {0}
+
+dailySummaries.title = Daily submissions
+dailySummaries.heading = Daily submissions

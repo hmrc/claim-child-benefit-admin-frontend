@@ -22,6 +22,7 @@ import play.api.Configuration
 import play.api.mvc.QueryStringBindable
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import java.net.URL
 import java.time.LocalDate

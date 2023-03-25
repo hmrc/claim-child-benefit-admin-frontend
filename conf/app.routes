@@ -1,9 +1,11 @@
 # microservice specific routes
 
-->         /hmrc-frontend           hmrcfrontend.Routes
-GET        /assets/*file            controllers.Assets.versioned(path = "/public", file: Asset)
+->         /hmrc-frontend                     hmrcfrontend.Routes
+GET        /assets/*file                      controllers.Assets.versioned(path = "/public", file: Asset)
 
-GET        /                        controllers.IndexController.onPageLoad()
+GET        /                                  controllers.IndexController.onPageLoad()
 
-GET        /throttle                controllers.ThrottleController.onPageLoad()
-POST       /throttle                controllers.ThrottleController.onSubmit()
+GET        /throttle                          controllers.ThrottleController.onPageLoad()
+POST       /throttle                          controllers.ThrottleController.onSubmit()
+
+GET        /supplementary-data/summaries      controllers.SupplementaryDataDailySummaryController.onPageLoad()

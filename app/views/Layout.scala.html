@@ -21,13 +21,15 @@
         appConfig: AppConfig,
         govukLayout: GovukLayout,
         hmrcInternalHead: HmrcInternalHead,
-        hmrcInternalHeader: HmrcInternalHeader
+        hmrcInternalHeader: HmrcInternalHeader,
+        twoThirdsContent: TwoThirdsMainContent
 )
-@(pageTitle: Option[String] = None, beforeContent: Option[Html] = None)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+@(pageTitle: Option[String] = None, beforeContent: Option[Html] = None, pageLayout: Html => Html = twoThirdsContent(_))(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @govukLayout(
  pageTitle = pageTitle,
  headBlock = Some(hmrcInternalHead(nonce = CSPNonce.get)),
  headerBlock = Some(hmrcInternalHeader(InternalHeader(serviceName = Some(messages("service.name")), homepageUrl = routes.IndexController.onPageLoad().absoluteURL()))),
- beforeContentBlock = beforeContent
+ beforeContentBlock = beforeContent,
+ mainContentLayout = Some(pageLayout)
 )(contentBlock)
