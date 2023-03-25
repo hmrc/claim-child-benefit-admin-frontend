@@ -38,7 +38,7 @@
   @lastPage = @{totalCount / limit}
 
   @breadcrumbs = {
-    @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
+    @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index, ServiceBreadcrumbs.supplementaryDataDailySummary)))
   }
 
   @pageLayout(contentBlock: Html) = {
@@ -89,7 +89,7 @@
           @submissions.sortBy(_.lastUpdated).reverse.map { submission =>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">
-                <a href="#" class="govuk-link govuk-!-font-size-16">
+                <a href="@routes.SupplementaryDataSubmissionController.onPageLoad(submission.id)" class="govuk-link govuk-!-font-size-16">
                   @submission.id
                 </a>
               </th>

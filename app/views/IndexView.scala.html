@@ -22,7 +22,10 @@
 
 @layout(pageTitle = Some(messages("index.title"))) {
 
-    <h1 class="govuk-heading-l">@messages("index.heading")</h1>
+  <h1 class="govuk-heading-l">@messages("index.heading")</h1>
 
-    <p class="govuk-body">@messages("index.p")</p>
+  <ul class="govuk-list">
+    <li><a class="govuk-link" href="@routes.ThrottleController.onPageLoad()">@messages("index.action.throttle")</a></li>
+    <li><a class="govuk-link" href="@routes.SupplementaryDataDailySummaryController.onPageLoad()">@messages("index.action.supplementaryData")</a></li>
+  </ul>
 }

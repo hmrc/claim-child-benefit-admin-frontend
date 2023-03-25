@@ -61,22 +61,22 @@
           <th scope="row" class="govuk-table__header">@date(summary.date)</th>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             @if(summary.submitted == 0) { 0 } else {
-              <a class="govuk-link" href="#">@summary.submitted</a>
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Submitted), Some(summary.date))">@summary.submitted</a>
             }
           </td>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             @if(summary.forwarded == 0) { 0 } else {
-              <a class="govuk-link" href="#">@summary.forwarded</a>
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Forwarded), Some(summary.date))">@summary.forwarded</a>
             }
           </td>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             @if(summary.completed == 0) { 0 } else {
-              <a class="govuk-link" href="#">@summary.completed</a>
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Completed), Some(summary.date))">@summary.completed</a>
             }
           </td>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             @if(summary.failed == 0) { 0 } else {
-              <a class="govuk-link" href="#">@summary.failed</a>
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Failed), Some(summary.date))">@summary.failed</a>
             }
           </td>
         </tr>

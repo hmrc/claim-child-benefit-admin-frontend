@@ -24,7 +24,7 @@
 @(submission: SubmissionItem)(implicit request: Request[_], messages: Messages)
 
 @breadcrumbs = {
-  @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
+  @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index, ServiceBreadcrumbs.supplementaryDataDailySummary, ServiceBreadcrumbs.supplementaryDataSubmissions(submission))))
 }
 
 @pageLayout(contentBlock: Html) = {
@@ -49,8 +49,12 @@
       <dd><code>@submission.id</code></dd>
     </div>
     <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">@messages("submission.correlationId")</dt>
+      <dd><code>@submission.metadata.correlationId</code></dd>
+    </div>
+    <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">@messages("submission.sdesCorrelationId")</dt>
-      <dd><code>@submission.sdesCorrelationId</code></dd>
+      <dd><code>@submission.metadata.correlationId</code></dd>
     </div>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">@messages("submission.status")</dt>
@@ -62,6 +66,10 @@
         <dd>@failureReason</dd>
       </div>
     }
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">@messages("submission.submissionDate")</dt>
+      <dd>@submission.metadata.submissionDate</dd>
+    </div>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">@messages("submission.createdAt")</dt>
       <dd>@submission.created</dd>
