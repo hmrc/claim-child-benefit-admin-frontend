@@ -1,0 +1,76 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.ServiceBreadcrumbs
+
+@this(
+        layout: Layout,
+        formHelper: FormWithCSRF,
+        govukInput: GovukInput,
+        govukButton: GovukButton,
+        govukErrorSummary: GovukErrorSummary,
+        govukNotificationBanner: GovukNotificationBanner,
+        govukBreadcrumbs: GovukBreadcrumbs
+)
+
+@(form: Form[Int], throttleData: ThrottleData)(implicit request: Request[_], messages: Messages)
+
+@breadcrumbs = {
+  @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
+}
+
+@layout(pageTitle = Some(messages("throttle.title")), beforeContent = Some(breadcrumbs)) {
+
+  @if(form.errors.nonEmpty) {
+    @govukErrorSummary(ErrorSummary().withFormErrorsAsText(form))
+  }
+
+  @formHelper(action = routes.ThrottleController.onSubmit(), Symbol("autocomplete") -> "off") {
+
+    <h1 class="govuk-heading-l">@messages("throttle.heading")</h1>
+
+    @request.flash.get("claim-child-benefit-admin-notification").map { message =>
+      @govukNotificationBanner(NotificationBanner(bannerType = Some("success"), title = Text(messages("site.success")), content = Text(message)))
+    }
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          @messages("throttle.data.count")
+        </dt>
+        <dd class="govuk-summary-list__value">
+          @throttleData.count
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        @messages("throttle.data.limit")
+        </dt>
+        <dd class="govuk-summary-list__value">
+        @throttleData.limit
+        </dd>
+      </div>
+    </dl>
+
+    @govukInput(
+      Input(
+        label = Label(content = Text(messages("throttle.limit.label")))
+      ).withFormField(form("value"))
+    )
+
+    @govukButton(Button(content = Text(messages("site.submit"))))
+  }
+}
