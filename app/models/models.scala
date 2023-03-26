@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-        layout: Layout
-)
+import play.api.mvc.QueryStringBindable
 
-@()(implicit request: Request[_], messages: Messages)
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-@layout(pageTitle = Some(messages("index.title"))) {
+package object models {
 
-  <h1 class="govuk-heading-l">@messages("index.heading")</h1>
+  private val formatter: DateTimeFormatter =
+    DateTimeFormatter.ISO_DATE
 
-  <ul class="govuk-list">
-    <li><a class="govuk-link" href="@routes.ThrottleController.onPageLoad()">@messages("index.action.throttle")</a></li>
-    <li><a class="govuk-link" href="@routes.SupplementaryDataDailySummaryController.onPageLoad()">@messages("index.action.supplementaryData")</a></li>
-  </ul>
+  implicit lazy val javaLocalDateQueryStringBindable: QueryStringBindable[LocalDate] =
+    new QueryStringBindable.Parsing[LocalDate](
+      LocalDate.parse(_, formatter),
+      formatter.format(_),
+      (key, _) => s"$key: invalid date"
+    )
 }

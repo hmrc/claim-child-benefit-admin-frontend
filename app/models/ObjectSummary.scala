@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-        layout: Layout
-)
+package models
 
-@()(implicit request: Request[_], messages: Messages)
+import play.api.libs.json.{Json, OFormat}
 
-@layout(pageTitle = Some(messages("index.title"))) {
+import java.time.Instant
 
-  <h1 class="govuk-heading-l">@messages("index.heading")</h1>
+final case class ObjectSummary(
+                                location: String,
+                                contentLength: Long,
+                                contentMd5: String,
+                                lastModified: Instant
+                              )
 
-  <ul class="govuk-list">
-    <li><a class="govuk-link" href="@routes.ThrottleController.onPageLoad()">@messages("index.action.throttle")</a></li>
-    <li><a class="govuk-link" href="@routes.SupplementaryDataDailySummaryController.onPageLoad()">@messages("index.action.supplementaryData")</a></li>
-  </ul>
+object ObjectSummary {
+  implicit lazy val format: OFormat[ObjectSummary] = Json.format
 }

@@ -16,6 +16,7 @@
 
 package views
 
+import models.SubmissionItem
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.{BreadcrumbsItem, Text}
 
@@ -24,5 +25,15 @@ object ServiceBreadcrumbs {
   def index(implicit messages: Messages): BreadcrumbsItem = BreadcrumbsItem(
     content = Text(messages("breadcrumbs.index")),
     href = Some(controllers.routes.IndexController.onPageLoad().url)
+  )
+
+  def supplementaryDataDailySummary(implicit messages: Messages): BreadcrumbsItem = BreadcrumbsItem(
+    content = Text(messages("breadcrumbs.supplementaryDataSummaries")),
+    href = Some(controllers.routes.SupplementaryDataDailySummaryController.onPageLoad().url)
+  )
+
+  def supplementaryDataSubmissions(submission: SubmissionItem)(implicit messages: Messages): BreadcrumbsItem = BreadcrumbsItem(
+    content = Text(messages("breadcrumbs.supplementaryDataSubmissions", submission.status)),
+    href = Some(controllers.routes.SupplementaryDataSubmissionsController.onPageLoad(status = Some(submission.status)).url)
   )
 }

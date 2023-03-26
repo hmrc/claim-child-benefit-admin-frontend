@@ -5,6 +5,18 @@ site.submit = Submit
 site.success = Success
 
 breadcrumbs.index = Home
+breadcrumbs.supplementaryDataSummaries = Supplementary Data
+breadcrumbs.supplementaryDataSubmissions = {0} Submissions
+
+status.submitted = Submitted
+status.forwarded = Forwarded
+status.completed = Completed
+status.failed = Failed
+
+index.title = Claim Child Benefit Admin Frontend
+index.heading = Claim Child Benefit Admin Frontend
+index.action.throttle = Throttle settings
+index.action.supplementaryData = Supplementary data submissions
 
 throttle.title = Throttle settings
 throttle.heading = Throttle settings
@@ -12,3 +24,34 @@ throttle.data.count = Count
 throttle.data.limit = Limit
 throttle.limit.label = Set a new limit
 throttle.limit.set = Limit set to {0}
+
+dailySummaries.title = Daily supplementary data submissions
+dailySummaries.heading = Daily supplementary data submissions
+
+submissions.title = Supplementary data submissions
+submissions.heading = Supplementary data submissions
+submissions.none = There are no supplementary data submissions
+submissions.filters = Filtered by
+submissions.filter.status = Status of {0}
+submissions.filter.created = Created on {0}
+submissions.id = Id
+submissions.status = Status
+submissions.lastUpdated = Last updated
+submissions.failureReason = Failure reason
+
+submission.title = Supplementary data submission
+submission.heading = Supplementary data submission
+submission.id = Id
+submission.correlationId = Correlation Id
+submission.sdesCorrelationId = SDES Correlation Id
+submission.status = Status
+submission.submissionDate = Submission date
+submission.createdAt = Created at
+submission.lastUpdated = Last updated
+submission.failureReason = Failure reason
+submission.retry = Resend submission
+submission.success = Success
+submission.retryComplete = Retry submitted for {0}
+
+pagination.previous = Previous
+pagination.next = Next

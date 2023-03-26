@@ -1,0 +1,86 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.ServiceBreadcrumbs
+
+@this(
+        layout: Layout,
+        govukBreadcrumbs: GovukBreadcrumbs
+)
+
+@(summaryResponse: DailySummaryResponse)(implicit request: Request[_], messages: Messages)
+
+  @breadcrumbs = {
+    @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
+  }
+
+  @pageLayout(contentBlock: Html) = {
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+      @contentBlock
+      </div>
+    </div>
+  }
+
+  @layout(
+    pageTitle = Some(titleNoForm(messages("dailySummaries.title"))),
+    beforeContent = Some(breadcrumbs),
+    pageLayout = pageLayout
+  ) {
+
+    <header class="hmrc-page-heading">
+      <h1 class="govuk-heading-l">@messages("dailySummaries.heading")</h1>
+    </header>
+
+    <table class="govuk-body govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Date</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">@messages("status.submitted")</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">@messages("status.forwarded")</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">@messages("status.completed")</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">@messages("status.failed")</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      @summaryResponse.summaries.sortBy(_.date).reverse.map { summary =>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">@date(summary.date)</th>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            @if(summary.submitted == 0) { 0 } else {
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Submitted), Some(summary.date))">@summary.submitted</a>
+            }
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            @if(summary.forwarded == 0) { 0 } else {
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Forwarded), Some(summary.date))">@summary.forwarded</a>
+            }
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            @if(summary.completed == 0) { 0 } else {
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Completed), Some(summary.date))">@summary.completed</a>
+            }
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            @if(summary.failed == 0) { 0 } else {
+              <a class="govuk-link" href="@routes.SupplementaryDataSubmissionsController.onPageLoad(Some(SubmissionItemStatus.Failed), Some(summary.date))">@summary.failed</a>
+            }
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  }
