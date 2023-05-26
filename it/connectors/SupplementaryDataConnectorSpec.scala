@@ -195,4 +195,41 @@ class SupplementaryDataConnectorSpec
       connector.dailySummaries(hc).failed.futureValue
     }
   }
+
+  "retry" - {
+
+    val hc = HeaderCarrier()
+    val id = "id"
+    val url = s"/claim-child-benefit/supplementary-data/$id/retry"
+
+    "must be successful when the server responds with OK" in {
+
+      server.stubFor(
+        post(urlMatching(url))
+          .willReturn(ok())
+      )
+
+      connector.retry(id)(hc).futureValue
+    }
+
+    "must fail when the server responds with NOT_FOUND" in {
+
+      server.stubFor(
+        post(urlMatching(url))
+          .willReturn(notFound())
+      )
+
+      connector.retry(id)(hc).failed.futureValue
+    }
+
+    "must fail when the server returns an error" in {
+
+      server.stubFor(
+        post(urlMatching(url))
+          .willReturn(serverError())
+      )
+
+      connector.retry(id)(hc).failed.futureValue
+    }
+  }
 }

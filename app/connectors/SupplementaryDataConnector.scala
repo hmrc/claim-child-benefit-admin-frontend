@@ -17,11 +17,12 @@
 package connectors
 
 import config.Service
-import models.{DailySummaryResponse, ListResult, SubmissionItem, SubmissionItemStatus, javaLocalDateQueryStringBindable}
+import models.{DailySummaryResponse, Done, ListResult, SubmissionItem, SubmissionItemStatus, javaLocalDateQueryStringBindable}
 import play.api.Configuration
+import play.api.http.Status.OK
 import play.api.mvc.QueryStringBindable
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import java.net.URL
@@ -73,4 +74,16 @@ class SupplementaryDataConnector @Inject()(
     httpClient
       .get(url"${claimChildBenefitService.baseUrl}/claim-child-benefit/supplementary-data/summaries")
       .execute[DailySummaryResponse]
+
+  def retry(id: String)(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .post(url"${claimChildBenefitService.baseUrl}/claim-child-benefit/supplementary-data/$id/retry")
+      .execute[HttpResponse]
+      .flatMap { response =>
+        if (response.status == OK) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("Unexpected response when attempting to retry", response.status))
+        }
+      }
 }
