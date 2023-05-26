@@ -18,7 +18,10 @@
 
 @this(
         layout: Layout,
-        govukBreadcrumbs: GovukBreadcrumbs
+        govukBreadcrumbs: GovukBreadcrumbs,
+        govukNotificationBanner: GovukNotificationBanner,
+        govukButton: GovukButton,
+        formHelper: FormWithCSRF
 )
 
 @(submission: SubmissionItem)(implicit request: Request[_], messages: Messages)
@@ -42,6 +45,10 @@
 ) {
 
   <h1 class="govuk-heading-l">@messages("submission.heading")</h1>
+
+  @request.flash.get("claim-child-benefit-admin-notification").map { message =>
+    @govukNotificationBanner(NotificationBanner(bannerType = Some("success"), title = Text(messages("site.success")), content = Text(message)))
+  }
 
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
@@ -78,5 +85,15 @@
       <dt class="govuk-summary-list__key">@messages("submission.lastUpdated")</dt>
       <dd>@submission.lastUpdated</dd>
     </div>
+    @submission.retries.map { retries =>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">@messages("submission.retries")</dt>
+        <dd>@retries</dd>
+      </div>
+    }
   </dl>
+
+  @formHelper(action = routes.SupplementaryDataSubmissionController.retry(submission.id), Symbol("autocomplete") -> "off") {
+    @govukButton(Button(content = Text(messages("submission.retry"))))
+  }
 }

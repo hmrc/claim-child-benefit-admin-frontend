@@ -51,6 +51,7 @@ submission.lastUpdated = Last updated
 submission.failureReason = Failure reason
 submission.retry = Resend submission
 submission.success = Success
+submission.retries = Retries
 submission.retryComplete = Retry submitted for {0}
 
 pagination.previous = Previous
