@@ -142,4 +142,45 @@ class SupplementaryDataSubmissionControllerSpec
       route(app, request).value.failed.futureValue
     }
   }
+
+  "retry" - {
+
+    "must return OK, redirect to the submission page and flash a message when the retry is successful" in {
+
+      val request = FakeRequest(routes.SupplementaryDataSubmissionController.retry(id))
+        .withSession("authToken" -> "Token some-token")
+
+      val predicate = Permission(Resource(ResourceType("claim-child-benefit-admin"), ResourceLocation("supplementary-data")), IAAction("ADMIN"))
+      when(mockStubBehaviour.stubAuth[Unit](any(), any())).thenReturn(Future.unit)
+      when(mockSupplementaryDataConnector.retry(any())(any())).thenReturn(Future.successful(Done))
+
+      val result = route(app, request).value
+
+      status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual routes.SupplementaryDataSubmissionController.onPageLoad(id).url
+      flash(result).get("claim-child-benefit-admin-notification").value mustEqual messages("submission.retryComplete", id)
+      verify(mockSupplementaryDataConnector).retry(eqTo(id))(any())
+      verify(mockStubBehaviour).stubAuth(Some(predicate), Retrieval.EmptyRetrieval)
+    }
+
+    "must redirect to login when the user is not authenticated" in {
+
+      val request = FakeRequest(routes.SupplementaryDataSubmissionController.retry(id)) // No authToken in session
+
+      val result = route(app, request).value
+
+      status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual s"/internal-auth-frontend/sign-in?continue_url=%2Fclaim-child-benefit-admin-frontend%2Fsupplementary-data%2Fid"
+    }
+
+    "must fail when the user is not authorised" in {
+
+      when(mockStubBehaviour.stubAuth[Unit](any(), any())).thenReturn(Future.failed(new Exception("foo")))
+
+      val request = FakeRequest(routes.SupplementaryDataSubmissionController.onPageLoad(id))
+        .withSession("authToken" -> "Token some-token")
+
+      route(app, request).value.failed.futureValue
+    }
+  }
 }

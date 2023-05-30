@@ -30,7 +30,8 @@ final case class SubmissionItem(
                                  sdesCorrelationId: String,
                                  created: Instant,
                                  lastUpdated: Instant,
-                                 lockedAt: Option[Instant] = None
+                                 lockedAt: Option[Instant] = None,
+                                 retries: Option[Int] = None
                                )
 
 object SubmissionItem {
