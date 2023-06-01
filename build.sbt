@@ -27,8 +27,14 @@ lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     // https://www.scala-lang.org/2021/01/12/configuring-and-suppressing-warnings.html
     // suppress warnings in generated routes files
-    scalacOptions += "-Wconf:src=routes/.*:s",
-    scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s",
+    scalacOptions ++= Seq(
+      "-Wconf:src=routes/.*:s",
+      "-Wconf:cat=unused-imports&src=html/.*:s",
+      "-Xfatal-warnings",
+      "-feature",
+      "-deprecation",
+      "-Xlint"
+    ),
     pipelineStages := Seq(gzip),
   )
   .configs(IntegrationTest)
