@@ -60,7 +60,7 @@ class SupplementaryDataDailySummaryControllerSpec
   private implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
 
   override protected def beforeEach(): Unit = {
-    Mockito.reset(
+    Mockito.reset[Any](
       mockSupplementaryDataConnector,
       mockStubBehaviour
     )
