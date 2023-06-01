@@ -15,15 +15,7 @@ status.failed = Failed
 
 index.title = Claim Child Benefit Admin Frontend
 index.heading = Claim Child Benefit Admin Frontend
-index.action.throttle = Throttle settings
 index.action.supplementaryData = Supplementary data submissions
-
-throttle.title = Throttle settings
-throttle.heading = Throttle settings
-throttle.data.count = Count
-throttle.data.limit = Limit
-throttle.limit.label = Set a new limit
-throttle.limit.set = Limit set to {0}
 
 dailySummaries.title = Daily supplementary data submissions
 dailySummaries.heading = Daily supplementary data submissions
