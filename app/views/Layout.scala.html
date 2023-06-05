@@ -28,7 +28,7 @@
 
 @govukLayout(
  pageTitle = pageTitle,
- headBlock = Some(hmrcInternalHead(nonce = CSPNonce.get)),
+ headBlock = Some(hmrcInternalHead()),
  headerBlock = Some(hmrcInternalHeader(InternalHeader(serviceName = Some(messages("service.name")), homepageUrl = routes.IndexController.onPageLoad().absoluteURL()))),
  beforeContentBlock = beforeContent,
  mainContentLayout = Some(pageLayout)
