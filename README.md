@@ -1,4 +1,3 @@
-
 # claim-child-benefit-admin-frontend
 The claim admin frontend is a tool used to resend submissions to SDES. 
 
@@ -15,6 +14,20 @@ The admin service aim is to assist with difficulties with SDES where a submissio
 Therefore you can re-notify SDES of a submission by resending a file. See image below
 <img width="1131" alt="Screenshot 2023-12-13 at 13 00 12" src="https://github.com/hmrc/claim-child-benefit-admin-frontend/assets/59606793/091efb03-7abe-4323-ac8e-972842503791">
 
+This is deployed in QA, Staging, Production 
+
+- https://admin.qa.tax.service.gov.uk/claim-child-benefit-admin-frontend
+- https://admin.staging.tax.service.gov.uk/claim-child-benefit-admin-frontend
+- https://admin.tax.service.gov.uk/claim-child-benefit-admin-frontend
+
+## How to Test
+
+The service itself has a suite of unit tests as a part of the repository. These are located under _./claim_child_benefit_admin_frontend/test_ can be run directly in your IDE or with a unit test running tool of your choice.
+
+## Team channel and who owns the service
+Owning Team: SCA Optimization
+
+Slack Channel: #team-sca-child-benefit
 
 ### License
 
