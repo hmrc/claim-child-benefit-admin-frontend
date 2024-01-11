@@ -1,12 +1,11 @@
-import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
-import play.sbt.routes.RoutesKeys
+
 
 lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
-  .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
+  .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(
     majorVersion := 0,
-    scalaVersion := "2.13.8",
+    scalaVersion                      := "2.13.12",
     PlayKeys.playDefaultPort := 11308,
     RoutesKeys.routesImport ++= Seq(
       "java.time.LocalDate",
@@ -38,7 +37,7 @@ lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
     ),
     pipelineStages := Seq(gzip),
   )
-  .configs(IntegrationTest)
-  .settings(integrationTestSettings(): _*)
+//  .configs(IntegrationTest)
+//  .settings(integrationTestSettings(): _*)
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(CodeCoverageSettings.settings: _*)
