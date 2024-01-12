@@ -11,8 +11,8 @@ object AppDependencies {
 
   val test = Seq(
     "uk.gov.hmrc"             %% "bootstrap-test-play-30"     % bootstrapVersion,
-    "org.mockito"             %% "mockito-scala"              % "1.16.42",
-    "org.jsoup"               %  "jsoup"                      % "1.13.1"
+    "org.scalatestplus"       %% "mockito-4-6"              % "3.2.15.0",
+    "org.jsoup"               %  "jsoup"                      % "1.15.4"
   ).map(_ % Test)
 
   def apply(): Seq[ModuleID] = compile ++ test
