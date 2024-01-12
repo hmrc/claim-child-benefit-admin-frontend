@@ -1,3 +1,5 @@
+import play.sbt.routes.RoutesKeys
+import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 
 lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))

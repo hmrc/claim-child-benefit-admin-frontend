@@ -1,4 +1,4 @@
-
+import sbt._
 object AppDependencies {
 
   private val bootstrapVersion = "8.4.0"
