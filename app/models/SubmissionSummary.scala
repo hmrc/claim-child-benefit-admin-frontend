@@ -24,7 +24,8 @@ final case class SubmissionSummary(
                                     id: String,
                                     status: String,
                                     failureReason: Option[String],
-                                    lastUpdated: Instant
+                                    lastUpdated: Instant,
+                                    retries: Option[Int]
                                   )
 
 object SubmissionSummary {

@@ -30,6 +30,7 @@ submissions.id = Id
 submissions.status = Status
 submissions.lastUpdated = Last updated
 submissions.failureReason = Failure reason
+submissions.retries = Retries
 
 submission.title = Supplementary data submission
 submission.heading = Supplementary data submission

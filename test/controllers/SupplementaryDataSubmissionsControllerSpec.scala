@@ -77,8 +77,8 @@ class SupplementaryDataSubmissionsControllerSpec
     val listResult = ListResult(
       totalCount = 2,
       List(
-        SubmissionSummary("id1", "Submitted", None, Instant.now),
-        SubmissionSummary("id2", "Processed", None, Instant.now)
+        SubmissionSummary("id1", "Submitted", None, Instant.now, None),
+        SubmissionSummary("id2", "Processed", None, Instant.now, Some(1))
       )
     )
 

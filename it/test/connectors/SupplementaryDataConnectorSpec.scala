@@ -112,8 +112,8 @@ class SupplementaryDataConnectorSpec
     val listResult = ListResult(
       totalCount = 2,
       List(
-        SubmissionSummary("id1", "Submitted", None, Instant.now.truncatedTo(ChronoUnit.MILLIS)),
-        SubmissionSummary("id2", "Processed", None, Instant.now.truncatedTo(ChronoUnit.MILLIS))
+        SubmissionSummary("id1", "Submitted", None, Instant.now.truncatedTo(ChronoUnit.MILLIS), None),
+        SubmissionSummary("id2", "Processed", None, Instant.now.truncatedTo(ChronoUnit.MILLIS), Some(1))
       )
     )
 

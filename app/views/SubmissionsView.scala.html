@@ -82,6 +82,9 @@
             @if(submissions.exists(_.failureReason.isDefined)) {
               <th class="govuk-table__header" scope="col">@messages("submissions.failureReason")</th>
             }
+            @if(submissions.exists(s => s.status == messages("status.forwarded") || s.status == messages("status.failed"))) {
+              <th class="govuk-table__header" scope="col">@messages("submissions.retries")</th>
+            }
             <th class="govuk-table__header" scope="col">@messages("submissions.lastUpdated")</th>
           </tr>
         </thead>
@@ -98,6 +101,9 @@
               }
               @if(submissions.exists(_.failureReason.isDefined)) {
                 <td class="govuk-table__cell">@submission.failureReason</td>
+              }
+              @if(submissions.exists(s => s.status == messages("status.forwarded") || s.status == messages("status.failed"))) {
+                <td class="govuk-table__cell">@submission.retries.getOrElse(0)</td>
               }
               <td class="govuk-table__cell">@submission.lastUpdated</td>
             </tr>
