@@ -18,16 +18,15 @@
 @import views.html.helper.CSPNonce
 
 @this(
-        appConfig: AppConfig,
         govukLayout: GovukLayout,
         hmrcInternalHead: HmrcInternalHead,
         hmrcInternalHeader: HmrcInternalHeader,
         twoThirdsContent: TwoThirdsMainContent
 )
-@(pageTitle: Option[String] = None, beforeContent: Option[Html] = None, pageLayout: Html => Html = twoThirdsContent(_))(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+@(title: Option[String] = None, beforeContent: Option[Html] = None, pageLayout: Html => Html = twoThirdsContent(_))(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
 
 @govukLayout(
- pageTitle = pageTitle,
+ pageTitle = title,
  headBlock = Some(hmrcInternalHead()),
  headerBlock = Some(hmrcInternalHeader(InternalHeader(serviceName = Some(messages("service.name")), homepageUrl = routes.IndexController.onPageLoad().absoluteURL()))),
  beforeContentBlock = beforeContent,

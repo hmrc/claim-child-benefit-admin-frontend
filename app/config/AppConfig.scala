@@ -16,11 +16,16 @@
 
 package config
 
-import javax.inject.{Inject, Singleton}
 import play.api.Configuration
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
-class AppConfig @Inject()(config: Configuration) {
+class AppConfig @Inject()(servicesConfig: ServicesConfig,
+                          config: Configuration) {
   val welshLanguageSupportEnabled: Boolean = config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
+  
+  lazy val claimChildBenefitServiceUrl: String = servicesConfig.baseUrl("claim-child-benefit-admin-service")
 
 }
