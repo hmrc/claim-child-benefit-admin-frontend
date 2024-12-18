@@ -35,8 +35,6 @@ class SupplementaryDataConnector @Inject()(
                                         appConfig: AppConfig
                                       )(implicit ec: ExecutionContext) {
 
-//  private val claimChildBenefitService: Service = configuration.get[Service]("microservice.services.claim-child-benefit")
-
   def get(id: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionItem]] =
     httpClient
       .get(url"${appConfig.claimChildBenefitServiceUrl}/claim-child-benefit/supplementary-data/$id")
