@@ -24,9 +24,10 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class AppConfig @Inject()(servicesConfig: ServicesConfig,
                           config: Configuration) {
+  import servicesConfig.baseUrl
 
   val welshLanguageSupportEnabled: Boolean = config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
 
-  lazy val claimChildBenefitServiceUrl: String = servicesConfig.baseUrl("claim-child-benefit-admin-service")
+  lazy val claimChildBenefitServiceUrl: String = baseUrl("claim-child-benefit")
 
 }
