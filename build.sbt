@@ -37,8 +37,6 @@ lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
       "-Xfatal-warnings",
       "-feature",
       "-deprecation"
-//      "-Xlint"
-      //TODO Xlint deprecated
     ),
     pipelineStages := Seq(gzip),
   )
