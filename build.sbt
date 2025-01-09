@@ -3,7 +3,7 @@ import uk.gov.hmrc.DefaultBuildSettings
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.12"
+ThisBuild / scalaVersion := "3.6.2"
 
 lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
@@ -32,16 +32,17 @@ lazy val microservice = Project("claim-child-benefit-admin-frontend", file("."))
     // suppress warnings in generated routes files
     scalacOptions ++= Seq(
       "-Wconf:src=routes/.*:s",
-      "-Wconf:cat=unused-imports&src=html/.*:s",
+      "-Wconf:msg=Flag.*repeatedly:s",
+      "-Wconf:msg=unused.import&src=html/.*:s",
       "-Xfatal-warnings",
       "-feature",
-      "-deprecation",
-      "-Xlint"
+      "-deprecation"
     ),
     pipelineStages := Seq(gzip),
   )
   .settings(resolvers += Resolver.jcenterRepo)
-  .settings(CodeCoverageSettings.settings: _*)
+  .settings(CodeCoverageSettings.settings *)
+
 
 lazy val it = project
   .enablePlugins(PlayScala)

@@ -16,16 +16,15 @@
 
 package connectors
 
-import config.Service
+import config.AppConfig
 import models.{DailySummaryResponse, Done, ListResult, SubmissionItem, SubmissionItemStatus, javaLocalDateQueryStringBindable}
-import play.api.Configuration
 import play.api.http.Status.OK
 import play.api.mvc.QueryStringBindable
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
-import uk.gov.hmrc.http.HttpReads.Implicits._
 
-import java.net.URL
+import java.net.URI
 import java.time.LocalDate
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,14 +32,12 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class SupplementaryDataConnector @Inject()(
                                         httpClient: HttpClientV2,
-                                        configuration: Configuration
+                                        appConfig: AppConfig
                                       )(implicit ec: ExecutionContext) {
-
-  private val claimChildBenefitService: Service = configuration.get[Service]("microservice.services.claim-child-benefit")
 
   def get(id: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionItem]] =
     httpClient
-      .get(url"${claimChildBenefitService.baseUrl}/claim-child-benefit/supplementary-data/$id")
+      .get(url"${appConfig.claimChildBenefitServiceUrl}/claim-child-benefit/supplementary-data/$id")
       .execute[Option[SubmissionItem]]
 
   def list(
@@ -66,18 +63,18 @@ class SupplementaryDataConnector @Inject()(
     }
 
     httpClient
-      .get(new URL(s"${claimChildBenefitService.baseUrl}/claim-child-benefit/supplementary-data$query"))
+      .get(new URI(s"${appConfig.claimChildBenefitServiceUrl}/claim-child-benefit/supplementary-data$query").toURL)
       .execute[ListResult]
   }
 
   def dailySummaries(implicit hc: HeaderCarrier): Future[DailySummaryResponse] =
     httpClient
-      .get(url"${claimChildBenefitService.baseUrl}/claim-child-benefit/supplementary-data/summaries")
+      .get(url"${appConfig.claimChildBenefitServiceUrl}/claim-child-benefit/supplementary-data/summaries")
       .execute[DailySummaryResponse]
 
   def retry(id: String)(implicit hc: HeaderCarrier): Future[Done] =
     httpClient
-      .post(url"${claimChildBenefitService.baseUrl}/claim-child-benefit/supplementary-data/$id/retry")
+      .post(url"${appConfig.claimChildBenefitServiceUrl}/claim-child-benefit/supplementary-data/$id/retry")
       .execute[HttpResponse]
       .flatMap { response =>
         if (response.status == OK) {

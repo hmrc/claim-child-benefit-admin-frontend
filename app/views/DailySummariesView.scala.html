@@ -21,13 +21,13 @@
         govukBreadcrumbs: GovukBreadcrumbs
 )
 
-@(summaryResponse: DailySummaryResponse)(implicit request: Request[_], messages: Messages)
+@(summaryResponse: DailySummaryResponse)(implicit request: RequestHeader, messages: Messages)
 
   @breadcrumbs = {
     @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
   }
 
-  @pageLayout(contentBlock: Html) = {
+  @pageLayout2(contentBlock: Html) = {
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
       @contentBlock
@@ -36,9 +36,9 @@
   }
 
   @layout(
-    pageTitle = Some(titleNoForm(messages("dailySummaries.title"))),
+    title = Some(titleNoForm(messages("dailySummaries.title"))),
     beforeContent = Some(breadcrumbs),
-    pageLayout = pageLayout
+    pageLayout = pageLayout2
   ) {
 
     <header class="hmrc-page-heading">

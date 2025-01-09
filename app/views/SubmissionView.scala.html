@@ -24,7 +24,7 @@
         formHelper: FormWithCSRF
 )
 
-@(submission: SubmissionItem)(implicit request: Request[_], messages: Messages)
+@(submission: SubmissionItem)(implicit request: RequestHeader, messages: Messages)
 
 @breadcrumbs = {
   @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index, ServiceBreadcrumbs.supplementaryDataDailySummary, ServiceBreadcrumbs.supplementaryDataSubmissions(submission))))
@@ -39,7 +39,7 @@
 }
 
 @layout(
-  pageTitle = Some(titleNoForm(messages("submission.title"))),
+  title = Some(titleNoForm(messages("submission.title"))),
   pageLayout = pageLayout,
   beforeContent = Some(breadcrumbs)
 ) {
