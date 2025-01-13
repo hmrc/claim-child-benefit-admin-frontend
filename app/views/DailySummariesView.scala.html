@@ -27,7 +27,7 @@
     @govukBreadcrumbs(Breadcrumbs(Seq(ServiceBreadcrumbs.index)))
   }
 
-  @pageLayout2(contentBlock: Html) = {
+  @pageLayout(contentBlock: Html) = {
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
       @contentBlock
@@ -38,7 +38,7 @@
   @layout(
     title = Some(titleNoForm(messages("dailySummaries.title"))),
     beforeContent = Some(breadcrumbs),
-    pageLayout = pageLayout2
+    pageLayout = pageLayout
   ) {
 
     <header class="hmrc-page-heading">
