@@ -26,7 +26,7 @@ object SubmissionItemStatus {
   case object Submitted extends SubmissionItemStatus
   case object Forwarded extends SubmissionItemStatus
   case object Processed extends SubmissionItemStatus
-  case object Failed extends SubmissionItemStatus
+  case object Failed    extends SubmissionItemStatus
   case object Completed extends SubmissionItemStatus
 
   lazy val reads: Reads[SubmissionItemStatus] =
